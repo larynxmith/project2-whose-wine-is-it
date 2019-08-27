@@ -32,6 +32,7 @@ passport.use(new LocalStrategy({
     .then(foundUser => {
         //if user not found with that email -OR-
         //user found, but incorrect password
+        console.log('found user', !foundUser)
         if(!foundUser || !foundUser.validPassword(typedInPassword)) {
             //BAD user, return null
             cb(null, null)

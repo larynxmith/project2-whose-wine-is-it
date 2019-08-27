@@ -2,7 +2,8 @@
   "development": {
     "database": "whose-wine-is-it",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "logging": false
   },
   "test": {
     "database": "whose-wine-is-it",
