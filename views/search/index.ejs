@@ -56,24 +56,24 @@
                 </thead>
                 <tbody>
                     <% let rank = 1 %>
-                    <% searchList.forEach((w) => { %>
+                    <% searchList.forEach((w, i) => { %>
                         <tr>
                             <th scope="row"><%= rank++ %></th>
                             <td><%= w.wine %></td>
                             <td><%= w.vintage %></td>
                             <td><%= w.score %></td>
                             <td>
-                                <form method="POST" action="/profile">
-                                    <input type="hidden" name="wine" value="<%= w.wine %>">
-                                    <input type="hidden" name="appellation" value="<%= w.appellation %>">
-                                    <input type="hidden" name="regions" value="<%= w.region %>">
-                                    <input type="hidden" name="country" value="<%= w.country %>">
-                                    <input type="hidden" name="vintage" value="<%= w.vintage %>">
-                                    <input type="hidden" name="score" value="<%= w.score %>">
-                                    <input type="hidden" name="tasted" value="false">
-                                    <input type="hidden" name="wishlist" value="false">
+                                <form>
+                                    <input type="hidden" id="wine<%= i %>" name="wine" value="<%= w.wine %>">
+                                    <input type="hidden" id="appellation<%= i %>" name="appellation" value="<%= w.appellation %>">
+                                    <input type="hidden" id="regions<%= i %>" name="regions" value="<%= w.regions[0] %>">
+                                    <input type="hidden" id="country<%= i %>" name="country" value="<%= w.country %>">
+                                    <input type="hidden" id="vintage<%= i %>" name="vintage" value="<%= w.vintage %>">
+                                    <input type="hidden" id="score<%= i %>" name="score" value="<%= w.score %>">
+                                    <input type="hidden" id="tasted<%= i %>" ame="tasted" value="false">
+                                    <input type="hidden" id="wishlist<%= i %>" name="wishlist" value="false">
                                     
-                                    <button type='submit' class="tasted btn" value="false">Add to Your List</button>
+                                    <button type='button' class="added btn" id="btn<%= i %>">Add to Your List</button>
                                 </form>
                             </td>
                             </tr>

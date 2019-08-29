@@ -1,5 +1,3 @@
-import { INITIALLY_DEFERRED } from "sequelize/types/lib/deferrable";
-
 document.addEventListener('DOMContentLoaded', (e) => {
     console.log('DOM fully loaded and parsed')
 })
@@ -9,56 +7,70 @@ console.log('Script is loaded')
 document.getElementsByTagName('tbody')[0].addEventListener('click', (e) => {
     e.preventDefault()
     console.dir(e.target)
-    if(e.target.className === 'tasted btn') {
-        e.target.value = 'true'
-        e.target.className = 'tasted btn btn-success'
-        e.target.disabled = 'true'
-        //e.target.parentElement.submit()
-        console.log('Tasted success', e.target)
+    if(e.target.classList.contains('added')) {
+        // Get the index they clicked on
+        let i = e.target.id.slice(3)
+        console.log('targetid: ',e.target.id, 'slicedid: ', i)
+        let wine = document.getElementById('wine' + i).value;
+        let appellation = document.getElementById('appellation' + i).value;
+        let regions = document.getElementById('regions' + i).value;
+        let country = document.getElementById('country' + i).value;
+        let vintage = document.getElementById('vintage' + i).value;
+        let score = document.getElementById('score' + i).value;
+        let tasted = document.getElementById('tasted' + i).value;
+        let wishlist = document.getElementById('wishlist' + i).value;
+
+        console.log('Matched classes - now add ?')
         // This route we are calling (on the back end)
         // will add a row to the tasted table
-        // fetch(urlToServerRouteAddTasted)
-        // .then()
-        // .then(response => { 
+        console.log(`wine: ${wine}, appellation: ${appellation}, regions: ${regions}, country: ${country}, vintage: ${vintage}, score: ${score}, tasted: ${tasted}, wishlist: ${wishlist}`)
+        fetch('/profile/userlist', {
+            method: 'POST',
+            body: JSON.stringify({
+                wine: wine,
+                appellation: appellation,
+                regions: regions,
+                country: country,
+                vintage: vintage,
+                score: score,
+                tasted: tasted,
+                wishlist: wishlist
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(resp => resp.json())
+        .then(response => { 
+            console.log('SUCCESS', response)
+            
             // this is success, do DOM manipulation
-            // chnage the class name to "not-tasted"
-        // })
-        // .catch()
+            e.target.value = 'true'
+            e.target.className = 'added btn btn-success'
+        console.log('Added success', e.target)
+        })
+        .catch(err => {
+            console.log('An error -', err)
+        })
     } 
-    else if(e.target.classList.contains('not-tasted')) {
-        // REMOVE TASTED
-        // fetch(urlToServerRouteDeleteTasted)
-        // .then()
-        // .then(response => { 
-            // this is success, do DOM manipulation
-            // chnage the class name to "not-tasted"
-        // })
-        // .catch()
-    }
-    else if(e.target.className === 'wishlist btn') {
-        e.target.value = 'true'
-        e.target.className = 'tasted btn btn-primary'
-        e.target.disabled = 'true'
-        console.log('Wishlist success', e.target)
+    else if(e.target.classList.contains('btn-success')) {
+        fetch('/profile/userlist', {
+            method: 'DELETE',
+				data: {
+					id: i
+				}
+            .then(response => { 
+                console.log('SUCCESS', response)
+                
+                // this is success, do DOM manipulation
+                e.target.value = 'false'
+                e.target.className = 'added btn'
+            console.log('Added success', e.target)
+            })
+            .catch(err => {
+                console.log('An error -', err)
+            })
+        })
     }
     else { return }
-
 })
-
-//switch (getElementById('countryDd')) {
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-   
-
-   
-    
-

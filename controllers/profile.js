@@ -19,39 +19,37 @@ router.get('/userlist', (req, res) => {
 
 
 //POST to /profile/userlist
-router.post('/', (req, res) => {
+router.post('/userlist', (req, res) => {
     console.log('req.body', req.body)
-    console.log(req.user.id)
+    //console.log(req.user.id)
+    res.json({ msg: "Success"})
     // add the wine to the userList if not present, or find if it is
-    db.userlist.findOrCreate({
-        where: { 
-            wine: req.body.wine,
-            appellation: req.body.appellation,
-            region: req.body.regions,
-            country: req.body.country,
-            vintage: req.body.vintage,
-            score: req.body.score,
-            tasted: req.body.tasted,
-            wishlist: req.body.wishlist,
-            userId: req.user.id
-        },
-        defaults:  req.body
-    })
-    .spread((userlist, wasCreated) =>{
-        if(wasCreated)  {
-            req.flash('success', 'Wine Was Added!')
-    }
-        else {
-            req.flash('error', 'This Wine Has Already Been Added to Your List!')
-            // res.redirect('/userlist')
-        }
-    })
-    .then((result) => {
-        
-    }).catch((err) => {
-        console.log(err)
-        res.send('DB error, keep trying')
-    });
+    // db.userlist.findOrCreate({
+    //     where: { 
+    //         wine: req.body.wine,
+    //         appellation: req.body.appellation,
+    //         region: req.body.regions,
+    //         country: req.body.country,
+    //         vintage: req.body.vintage,
+    //         score: req.body.score,
+    //         tasted: req.body.tasted,
+    //         wishlist: req.body.wishlist,
+    //         userId: req.user.id
+    //     },
+    //     defaults:  req.body
+    // })
+    // .spread((userlist, wasCreated) =>{
+    //     if(wasCreated)  {
+    //         res.send('success')
+    //     }
+    //     else {
+    //         // TODO: DELETE USERLIST?
+    //         res.send('already there')
+    //     }
+    // }).catch((err) => {
+    //     console.log(err)
+    //     res.send('error')
+    // });
 })
 
 

@@ -16,15 +16,15 @@
             </thead>
             <tbody>
                 <% let rank = 1 %>
-                <% searchList.forEach((w) => { %>
+                <% searchList.forEach((w, i) => { %>
                     <tr>
                         <th scope="row"><%= rank++ %></th>
                         <td><%= w.wine %></td>
                         <td><%= w.vintage %></td>
                         <td><%= w.score %></td>
                         <td>
-                            <form method="POST" action="/profile">
-                                <input type="hidden" name="wine" value="<%= w.wine %>">
+                            <form>
+                                <input type="hidden" id="wine<%= i %>" name="wine" value="<%= w.wine %>">
                                 <input type="hidden" name="appellation" value="<%= w.appellation %>">
                                 <input type="hidden" name="regions" value="<%= w.region %>">
                                 <input type="hidden" name="country" value="<%= w.country %>">
@@ -33,7 +33,7 @@
                                 <input type="hidden" name="tasted" value="false">
                                 <input type="hidden" name="wishlist" value="false">
                                 
-                                <button type='submit' class="tasted btn" value="false">Add to Your List</button>
+                                <button type='button' class="tasted btn" id="btn<%= i %>">Add to Your List</button>
                             </form>
                         </td>
                         </tr>
