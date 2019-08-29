@@ -20,6 +20,7 @@ document.getElementsByTagName('tbody')[0].addEventListener('click', (e) => {
         let tasted = document.getElementById('tasted' + i).value;
         let wishlist = document.getElementById('wishlist' + i).value;
 
+        
         console.log('Matched classes - now add ?')
         // This route we are calling (on the back end)
         // will add a row to the tasted table
@@ -29,7 +30,7 @@ document.getElementsByTagName('tbody')[0].addEventListener('click', (e) => {
             body: JSON.stringify({
                 wine: wine,
                 appellation: appellation,
-                regions: regions,
+                region: regions,
                 country: country,
                 vintage: vintage,
                 score: score,
@@ -37,7 +38,7 @@ document.getElementsByTagName('tbody')[0].addEventListener('click', (e) => {
                 wishlist: wishlist
             }),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
         .then(resp => resp.json())
@@ -46,7 +47,7 @@ document.getElementsByTagName('tbody')[0].addEventListener('click', (e) => {
             
             // this is success, do DOM manipulation
             e.target.value = 'true'
-            e.target.className = 'added btn btn-success'
+            e.target.className = 'btn btn-success'
         console.log('Added success', e.target)
         })
         .catch(err => {
@@ -57,20 +58,20 @@ document.getElementsByTagName('tbody')[0].addEventListener('click', (e) => {
         fetch('/profile/userlist', {
             method: 'DELETE',
 				data: {
-					id: i
+					id: e.target.id.slice(3)
 				}
+            })  
             .then(response => { 
                 console.log('SUCCESS', response)
                 
                 // this is success, do DOM manipulation
                 e.target.value = 'false'
                 e.target.className = 'added btn'
-            console.log('Added success', e.target)
+            console.log('Delete success', e.target)
             })
             .catch(err => {
                 console.log('An error -', err)
             })
-        })
     }
     else { return }
 })

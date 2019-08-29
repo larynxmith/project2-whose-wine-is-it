@@ -20,36 +20,39 @@ router.get('/userlist', (req, res) => {
 
 //POST to /profile/userlist
 router.post('/userlist', (req, res) => {
+    // console.log('req.body', JSON.parse(req.body))
+    req.body = JSON.parse(Object.keys(req.body)[0])
     console.log('req.body', req.body)
+    console.log('req.body.wine: ', req.body.wine)
+
     //console.log(req.user.id)
-    res.json({ msg: "Success"})
-    // add the wine to the userList if not present, or find if it is
-    // db.userlist.findOrCreate({
-    //     where: { 
-    //         wine: req.body.wine,
-    //         appellation: req.body.appellation,
-    //         region: req.body.regions,
-    //         country: req.body.country,
-    //         vintage: req.body.vintage,
-    //         score: req.body.score,
-    //         tasted: req.body.tasted,
-    //         wishlist: req.body.wishlist,
-    //         userId: req.user.id
-    //     },
-    //     defaults:  req.body
-    // })
-    // .spread((userlist, wasCreated) =>{
-    //     if(wasCreated)  {
-    //         res.send('success')
-    //     }
-    //     else {
-    //         // TODO: DELETE USERLIST?
-    //         res.send('already there')
-    //     }
-    // }).catch((err) => {
-    //     console.log(err)
-    //     res.send('error')
-    // });
+    //add the wine to the userList if not present, or find if it is
+    db.userlist.findOrCreate({
+        where: { 
+            wine: req.body.wine,
+            appellation: req.body.appellation,
+            region: req.body.region,
+            country: req.body.country,
+            vintage: req.body.vintage,
+            score: req.body.score,
+            tasted: req.body.tasted,
+            wishlist: req.body.wishlist,
+            userId: req.user.id
+        },
+        defaults:  req.body
+    })
+    .spread((userlist, wasCreated) =>{
+        if(wasCreated)  {
+            res.json({ msg: "Success"})
+        }
+        else {
+            // TODO: DELETE USERLIST?
+            res.json({msg: 'already there'})
+        }
+    }).catch((err) => {
+        console.log(err)
+        res.send('error')
+    });
 })
 
 
