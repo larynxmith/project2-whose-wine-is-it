@@ -1,3 +1,40 @@
 <h1>Here's Your Current List of Tasted/Wishlist Wines</h1>
 
 
+
+<div class="container">
+    <h1 class="text-center">Search Results</h1>
+    <hr />
+    <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Wine</th>
+                <th scope="col">Vintage</th>
+                <th scope="col">GWS Score</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% let rank = 1 %>
+                <% searchList.forEach((w) => { %>
+                    <tr>
+                        <th scope="row"><%= rank++ %></th>
+                        <td><%= w.wine %></td>
+                        <td><%= w.vintage %></td>
+                        <td><%= w.score %></td>
+                        <td>
+                            <form method="POST" action="/profile">
+                                <input type="hidden" name="wine" value="<%= w.wine %>">
+                                <input type="hidden" name="appellation" value="<%= w.appellation %>">
+                                <input type="hidden" name="regions" value="<%= w.region %>">
+                                <input type="hidden" name="country" value="<%= w.country %>">
+                                <input type="hidden" name="vintage" value="<%= w.vintage %>">
+                                <input type="hidden" name="score" value="<%= w.score %>">
+                                <input type="hidden" name="tasted" value="false">
+                                <input type="hidden" name="wishlist" value="false">
+                                
+                                <button type='submit' class="tasted btn" value="false">Add to Your List</button>
+                            </form>
+                        </td>
+                        </tr>
+                <% }) %>

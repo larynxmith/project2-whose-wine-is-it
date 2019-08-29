@@ -24,13 +24,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       score: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       tasted: {
         type: Sequelize.BOOLEAN
       },
       wishlist: {
         type: Sequelize.BOOLEAN
+      },
+      userId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

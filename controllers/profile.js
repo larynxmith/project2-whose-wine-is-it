@@ -11,7 +11,10 @@ router.get('/', isLoggedIn, (req, res) => {
 
 //GET /profile/userlist
 router.get('/userlist', (req, res) => {
-    res.render('profile/userlist')
+    db.userlist.findAll()
+    .then(
+    res.render('profile/userlist', { userlist })
+    )
 })
 
 
@@ -30,12 +33,20 @@ router.post('/', (req, res) => {
             score: req.body.score,
             tasted: req.body.tasted,
             wishlist: req.body.wishlist,
-            userid: req.user.id
+            userId: req.user.id
         },
         defaults:  req.body
     })
+    .spread((userlist, wasCreated) =>{
+        if(wasCreated)  {
+            req.flash('success', 'Wine Was Added!')
+    }
+        else {
+            req.flash('error', 'This Wine Has Already Been Added to Your List!')
+            // res.redirect('/userlist')
+        }
+    })
     .then((result) => {
-        res.redirect('./userlist')
         
     }).catch((err) => {
         console.log(err)
