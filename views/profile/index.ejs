@@ -1,0 +1,66 @@
+<h1><%= currentUser.firstname %>'s Profile Page</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="row">
+                <p><strong>Name: </strong><%= currentUser.firstname %> <%= currentUser.lastname %>
+            </div>
+            <hr />
+            <div class="row">
+                <p>
+                    <%= currentUser.firstname %> was born on <%= moment.utc(currentUser.birthday).format('MMM Do YYYY')%>, and uses the 
+                    display name <%= currentUser.username %>. You can email <%= currentUser.firstname %> at <%= currentUser.email %>!
+                </p>    
+            </div>
+        </div>
+        <div class="col-sm">
+            <img src="<%= currentUser.profilepic %>" alt="profile pic">
+            <hr>
+            <p><%= currentUser.bio %></p>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h2># Wines Tasted</h2>
+            <hr />
+            <h3>Average Score: #</h3>
+        </div>
+        <div class="col-sm">
+            <h2>Top Regions</h2>
+            <hr />
+            <h3>Region listed -- Count of Tasted</h3>
+        </div>
+    </div>
+</div>
+
+<hr />
+<h2>Let's Go <a href="/search">Taste!</a></h2>
+
+<div class="container">
+        <div class="row">
+          <div class="col">
+            1 of 2
+          </div>
+          <div class="col">
+            2 of 2
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            1 of 3
+          </div>
+          <div class="col">
+            2 of 3
+          </div>
+          <div class="col">
+            3 of 3
+          </div>
+        </div>
+      </div>
+

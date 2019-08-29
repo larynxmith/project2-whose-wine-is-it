@@ -1,0 +1,75 @@
+<h1>Wine Search Page</h1>
+
+<h3>Country:
+    <select id="countryDd" name="Country">Country
+        <option value="USA">USA</option>
+        <option value="France">France</option>
+        <option value="Italy">Italy</option>
+        <option value="Spain">Spain</option>
+    </select>
+</h3>
+
+<h3>Region:
+    <select name="Region">Region
+        <option value="California">California</option>
+        <option value="Washington">Washington</option>
+        <option value="Oregon">Oregon</option>
+    </select>
+</h3>
+
+<h3>Appellation:
+    <select name="Appellation">Appellation
+        <option value="Carneros">Carneros</option>
+        <option value="Napa Valley">Napa Valley</option>
+        <option value="Russian River">Russian River</option>
+        <option value="Sonoma Coast">Sonoma Coast</option>
+    </select>
+</h3>
+
+<h3>Vintage:
+    <select name="Vintage">Vintage
+        <option value="2015">2015</option>
+        <option value="2014">2014</option>
+        <option value="2013">2013</option>
+        <option value="2012">2012</option>
+        <option value="2011">2011</option>
+
+    </select>
+</h3>
+
+<div class="container">
+        <h1 class="text-center">Search Results</h1>
+        <hr />
+        <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Wine</th>
+                    <th scope="col">Vintage</th>
+                    <th scope="col">GWS Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% let rank = 1 %>
+                    <% searchList.forEach((w) => { %>
+                        <tr>
+                            <th scope="row"><%= rank++ %></th>
+                            <td><%= w.wine %></td>
+                            <td><%= w.vintage %></td>
+                            <td><%= w.score %></td>
+                            <td>
+                                <form method="POST" action="/profile">
+                                    <input type="hidden" name="wine" value="<%= w.wine %>">
+                                    <input type="hidden" name="appellation" value="<%= w.appellation %>">
+                                    <input type="hidden" name="regions" value="<%= w.region %>">
+                                    <input type="hidden" name="country" value="<%= w.country %>">
+                                    <input type="hidden" name="vintage" value="<%= w.vintage %>">
+                                    <input type="hidden" name="score" value="<%= w.score %>">
+                                    <input type="hidden" name="tasted" value="false">
+                                    <input type="hidden" name="wishlist" value="false">
+                                    
+                                    <button type='submit' class="tasted btn" value="false">Add to Your List</button>
+                                </form>
+                            </td>
+                            </tr>
+                    <% }) %>

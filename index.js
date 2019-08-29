@@ -1,5 +1,6 @@
 // Required
 require('dotenv').config();
+let axios = require('axios')
 let express = require('express')
 let ejsLayouts = require('express-ejs-layouts')
 let db = require('./models')
@@ -18,7 +19,7 @@ let app = express()
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 app.use(ejsLayouts)
-app.use(express.static(__dirname + '/public/'))
+app.use(express.static(__dirname + '/static/'))
 app.use(methodOverride('_method'))
 
 let sessionStore = new SequelizeStore({
@@ -44,7 +45,7 @@ app.use(helmet())
 
 // Custom middleware: write data to locals for every page
 app.use((req, res, next) => {
-    res.locals.alerts = req.flash();
+    res.locals.alerts = req.flash()
     res.locals.currentUser = req.user
     res.locals.moment = moment
     next();
@@ -58,14 +59,10 @@ app.use(function(req, res, next) {
 
 
 // Controllers
-app.use('/auth', require('./controllers/auth'));
+app.use('/auth', require('./controllers/auth'))
+app.use('/profile', require('./controllers/profile'))
+app.use('/search', require('./controllers/search'))
 
-
-  // bring in authors,articles, and comments controllers
-// app.use('/comments', require('./controllers/comments'))
-// app.use('/posts', require('./controllers/posts'))
-// app.use('/topics', require('./controllers/topics'))
-// app.use('/users', require('./controllers/users'))
 
 app.get('/', (req, res) => {
     res.render('index')
