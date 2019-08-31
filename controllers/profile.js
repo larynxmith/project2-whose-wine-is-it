@@ -20,7 +20,7 @@ router.get('/userlist', (req, res) => {
 
 //POST to /profile/userlist
 router.post('/userlist', (req, res) => {
-    // console.log('req.body', JSON.parse(req.body))
+    console.log('POST', req.body)
     req.body = JSON.parse(Object.keys(req.body)[0])
     console.log('req.body', req.body)
     console.log('req.body.wine: ', req.body.wine)
@@ -43,16 +43,36 @@ router.post('/userlist', (req, res) => {
     })
     .spread((userlist, wasCreated) =>{
         if(wasCreated)  {
-            res.json({ msg: "Success"})
+            res.json({ msg: "Wine Was Added"})
         }
         else {
             // TODO: DELETE USERLIST?
-            res.json({msg: 'already there'})
+            res.json({msg: 'You Already Have This Wine on Your List'})
         }
     }).catch((err) => {
         console.log(err)
         res.send('error')
-    });
+    })
+})
+
+router.delete('/userlist', (req, res) => {
+    console.log('DELETE ', req.body)
+    req.body = JSON.parse(Object.keys(req.body)[0])
+	db.userlist.destroy({ 
+		where: { 
+			wine: req.body.wine,	
+            vintage: req.body.vintage,
+            userId: req.user.id
+		}
+	})
+	.then(() => {
+        console.log('msg error')
+        res.json({ msg: 'Wine Was Deleted'})
+	})
+	.catch((error) => {
+        console.log('error', error)
+        res.send('error')
+	})
 })
 
 

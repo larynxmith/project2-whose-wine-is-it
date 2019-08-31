@@ -48,6 +48,7 @@ document.getElementsByTagName('tbody')[0].addEventListener('click', (e) => {
             // this is success, do DOM manipulation
             e.target.value = 'true'
             e.target.className = 'btn btn-success'
+            e.target.innerHTML = '✓ Added'
         console.log('Added success', e.target)
         })
         .catch(err => {
@@ -55,23 +56,35 @@ document.getElementsByTagName('tbody')[0].addEventListener('click', (e) => {
         })
     } 
     else if(e.target.classList.contains('btn-success')) {
+        console.log('Delete is occurring')
+        let i = e.target.id.slice(3)
+        let wine = document.getElementById('wine' + i).value;
+        let vintage = document.getElementById('vintage' + i).value;
+
+        console.log('targetid: ',e.target.id, 'slicedid: ', i)
         fetch('/profile/userlist', {
             method: 'DELETE',
-				data: {
-					id: e.target.id.slice(3)
-				}
-            })  
-            .then(response => { 
-                console.log('SUCCESS', response)
-                
-                // this is success, do DOM manipulation
-                e.target.value = 'false'
-                e.target.className = 'added btn'
-            console.log('Delete success', e.target)
-            })
-            .catch(err => {
-                console.log('An error -', err)
-            })
+            body: JSON.stringify({
+                wine: wine,
+                vintage: vintage
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(resp => resp.json())
+        .then(response => { 
+            console.log('DELETE SUCCESS', response)
+            
+            // this is success, do DOM manipulation
+            e.target.value = 'false'
+            e.target.className = 'added btn'
+            e.target.innerHTML = 'Add to Your List'
+        console.log('Delete success', e.target)
+        })
+        .catch(err => {
+            console.log('An error -', err)
+        })
     }
     else { return }
 })
