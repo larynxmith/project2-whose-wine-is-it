@@ -11,10 +11,14 @@ router.get('/', isLoggedIn, (req, res) => {
 
 //GET /profile/userlist
 router.get('/userlist', (req, res) => {
-    db.userlist.findAll()
-    .then(
-    res.render('profile/userlist', { userlist })
-    )
+    db.userlist.findAll({
+        where: {
+            userId: req.user.id
+        }
+    })
+    .then((userlist) => {
+    res.render('profile/userlist', { userlist: userlist } )
+    })
 })
 
 
@@ -54,7 +58,7 @@ router.post('/userlist', (req, res) => {
         res.send('error')
     })
 })
-
+//DELETE from profile/userlist
 router.delete('/userlist', (req, res) => {
     console.log('DELETE ', req.body)
     req.body = JSON.parse(Object.keys(req.body)[0])
@@ -66,8 +70,32 @@ router.delete('/userlist', (req, res) => {
 		}
 	})
 	.then(() => {
-        console.log('msg error')
+        console.log('wine deleted')
         res.json({ msg: 'Wine Was Deleted'})
+	})
+	.catch((error) => {
+        console.log('error', error)
+        res.send('error')
+	})
+})
+
+//PUT to profile/userlist
+router.put('/userlist', (req, res) => {
+    console.log('PUT', req.body)
+    req.body = JSON.parse(Object.keys(req.body)[0])
+    db.userlist.update({
+        tasted: !req.body.tasted,
+        //wishlist: !req.body.tasted
+    }, {
+        where: { 
+			wine: req.body.wine,	
+            vintage: req.body.vintage,
+            userId: req.user.id
+		}
+    })
+    .then(() => {
+        console.log('wine status updated')
+        res.json({ msg: 'Status Was Updated'})
 	})
 	.catch((error) => {
         console.log('error', error)

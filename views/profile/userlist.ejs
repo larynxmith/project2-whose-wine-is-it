@@ -8,7 +8,7 @@
     <table class="table">
             <thead>
               <tr>
-                <th scope="col">Rank</th>
+                <th scope="col"></th>
                 <th scope="col">Wine</th>
                 <th scope="col">Vintage</th>
                 <th scope="col">GWS Score</th>
@@ -16,24 +16,26 @@
             </thead>
             <tbody>
                 <% let rank = 1 %>
-                <% searchList.forEach((w, i) => { %>
+                <% userlist.forEach((w, i) => { %>
                     <tr>
-                        <th scope="row"><%= rank++ %></th>
+                        <th scope="row"><%= ++i %></th>
                         <td><%= w.wine %></td>
                         <td><%= w.vintage %></td>
                         <td><%= w.score %></td>
                         <td>
                             <form>
                                 <input type="hidden" id="wine<%= i %>" name="wine" value="<%= w.wine %>">
-                                <input type="hidden" name="appellation" value="<%= w.appellation %>">
-                                <input type="hidden" name="regions" value="<%= w.region %>">
-                                <input type="hidden" name="country" value="<%= w.country %>">
-                                <input type="hidden" name="vintage" value="<%= w.vintage %>">
-                                <input type="hidden" name="score" value="<%= w.score %>">
-                                <input type="hidden" name="tasted" value="false">
-                                <input type="hidden" name="wishlist" value="false">
+                                    <input type="hidden" id="appellation<%= i %>" name="appellation" value="<%= w.appellation %>">
+                                    <input type="hidden" id="regions<%= i %>" name="region" value="<%= w.region%>">
+                                    <input type="hidden" id="country<%= i %>" name="country" value="<%= w.country %>">
+                                    <input type="hidden" id="vintage<%= i %>" name="vintage" value="<%= w.vintage %>">
+                                    <input type="hidden" id="score<%= i %>" name="score" value="<%= w.score %>">
+                                    <input type="hidden" id="tasted<%= i %>" name="tasted" value="false">
+                                    <input type="hidden" id="wishlist<%= i %>" name="wishlist" value="false">
                                 
-                                <button type='button' class="tasted btn" id="btn<%= i %>">Add to Your List</button>
+                                <button type='button' class="tasted btn btn-default" id="tasBtn<%= i %>">Mark as Tasted</button>
+                                <button type='button' class="wishlist btn btn-default" id="wisBtn<%= i %>">Mark as Wishlist</button>
+                                <button type='button' class="delete btn btn-default" id="delBtn<%= i %>">Remove from List</button>
                             </form>
                         </td>
                         </tr>
