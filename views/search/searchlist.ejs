@@ -1,0 +1,42 @@
+<h1> Your Search Results </h1>
+<div class="container">
+    <h1 class="text-center">Search Results</h1>
+    <hr />
+    <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Wine</th>
+                <th scope="col">Vintage</th>
+                <th scope="col">GWS Score</th>
+                <th scope="col">
+                    <form method="GET" action="/profile/userlist">
+                        <button type="submit" class="">See Your List!</button>
+                    </form>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+                <% let rank = 1 %>
+                <% searchList.forEach((w, i) => { %>
+                    <tr>
+                        <th scope="row"><%= rank++ %></th>
+                        <td><%= w.wine %></td>
+                        <td><%= w.vintage %></td>
+                        <td><%= w.score %></td>
+                        <td>
+                            <form>
+                                <input type="hidden" id="wine<%= i %>" name="wine" value="<%= w.wine %>">
+                                <input type="hidden" id="appellation<%= i %>" name="appellation" value="<%= w.appellation %>">
+                                <input type="hidden" id="regions<%= i %>" name="region" value="<%= w.regions[0] %>">
+                                <input type="hidden" id="country<%= i %>" name="country" value="<%= w.country %>">
+                                <input type="hidden" id="vintage<%= i %>" name="vintage" value="<%= w.vintage %>">
+                                <input type="hidden" id="score<%= i %>" name="score" value="<%= w.score %>">
+                                <input type="hidden" id="tasted<%= i %>" ame="tasted" value="false">
+                                <input type="hidden" id="wishlist<%= i %>" name="wishlist" value="false">
+                                
+                                <button type='button' class="added btn btn-primary" id="btn<%= i %>">Add to Your List</button>
+                            </form>
+                        </td>
+                        </tr>
+                <% }) %>
