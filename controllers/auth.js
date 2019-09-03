@@ -65,7 +65,7 @@ router.post('/login', passport.authenticate('local', {
 router.get('/logout', (req, res) => {
     req.logout(); //deletes the user from req.user
     req.flash('success', 'You are Logged out. Thank you for visiting! 👋')
-    res.redirect('/');
+    res.render('/logout');
 })
 
 module.exports = router;

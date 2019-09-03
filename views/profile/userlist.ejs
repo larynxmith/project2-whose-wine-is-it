@@ -25,17 +25,27 @@
                         <td>
                             <form>
                                 <input type="hidden" id="wine<%= i %>" name="wine" value="<%= w.wine %>">
-                                    <input type="hidden" id="appellation<%= i %>" name="appellation" value="<%= w.appellation %>">
-                                    <input type="hidden" id="regions<%= i %>" name="region" value="<%= w.region%>">
-                                    <input type="hidden" id="country<%= i %>" name="country" value="<%= w.country %>">
-                                    <input type="hidden" id="vintage<%= i %>" name="vintage" value="<%= w.vintage %>">
-                                    <input type="hidden" id="score<%= i %>" name="score" value="<%= w.score %>">
-                                    <input type="hidden" id="tasted<%= i %>" name="tasted" value="false">
-                                    <input type="hidden" id="wishlist<%= i %>" name="wishlist" value="false">
+                                <input type="hidden" id="appellation<%= i %>" name="appellation" value="<%= w.appellation %>">
+                                <input type="hidden" id="regions<%= i %>" name="region" value="<%= w.region%>">
+                                <input type="hidden" id="country<%= i %>" name="country" value="<%= w.country %>">
+                                <input type="hidden" id="vintage<%= i %>" name="vintage" value="<%= w.vintage %>">
+                                <input type="hidden" id="score<%= i %>" name="score" value="<%= w.score %>">
+                                <input type="hidden" id="tasted<%= i %>" name="tasted" value="<%= w.tasted %>">
+                                <input type="hidden" id="wishlist<%= i %>" name="wishlist" value="<%= w.wishlist %>">
+
+                                <% if(w.tasted) { %>
+                                    <button type='button' class="tasted btn btn-warning" id="tasBtn<%= i %>">🍷 Tasted</button>
+                                <% } else { %>
+                                    <button type='button' class="tasted btn btn-default" id="tasBtn<%= i %>">Mark as Tasted</button>
+                                <% } %>
+
+                                <% if(w.wishlist) { %>
+                                    <button type='button' class="wishlist btn btn-info" id="wisBtn<%= i %>">🤞I wish!</button>
+                                <% } else { %>
+                                    <button type='button' class="wishlist btn btn-default" id="wisBtn<%= i %>">Mark as Wishlist</button>
+                                <% } %>
                                 
-                                <button type='button' class="tasted btn btn-default" id="tasBtn<%= i %>">Mark as Tasted</button>
-                                <button type='button' class="wishlist btn btn-default" id="wisBtn<%= i %>">Mark as Wishlist</button>
-                                <button type='button' class="delete btn btn-default" id="delBtn<%= i %>">Remove from List</button>
+                                <button type='button' class="delete btn btn-default" id="Btn<%= i %>">Remove from List</button>
                             </form>
                         </td>
                         </tr>
