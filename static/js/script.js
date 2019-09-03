@@ -147,33 +147,3 @@ document.getElementsByTagName('tbody')[0].addEventListener('click', (e) => {
     else { return }
 })
 
-// Enable Search Button for populating API and Search List
-document.getElementById('search-button').addEventListener('click', (e) => {
-    e.preventDefault()
-    console.log('SEARCH is occurring')
-
-let searchCountry = document.getElementById('search-country')
-let searchRegion = document.getElementById('search-region')
-let searchAppellation = document.getElementById('search-appellation')
-console.log('Search Values: ', searchCountry, searchRegion, searchAppellation)
-let baseUrl = 'https://api.globalwinescore.com/globalwinescores/latest?'
-
-let apiUrl = baseUrl + 'country=' + searchCountry + '&region=' + searchRegion +
-                '&appellation=' + searchAppellation + '&ordering=-score&limit=1000'
-console.log(apiUrl)
-
-fetch('/search/searchlist', {
-    method: 'POST',
-    body: JSON.stringify({
-        apiUrl: apiUrl
-    }),
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-})
-.then(resp => resp.json())
-
-.catch(err => {
-    console.log('An error -', err)
-})
-})

@@ -1,25 +1,82 @@
 <h1>Wine Search Page</h1>
 
-<form method="POST" action="/search/searchlist">
-    <div class="form-group">
-        Country: <select class="form-control" id="search-country" name="country"> Country:
-            <% searchfields.forEach((c) => { %>
-                <option><%= c.country %></option>
-        <% }) %>
-        </select>
 
-        Region: <select class="form-control" id="search-region" name="region"> Region:
-            <% searchfields.forEach((r) => { %>
-                <option><%= r.region %></option>
-        <% }) %>
-        </select>
+<h3>Country:
+    <select id="countryDd" name="Country">Country
+        <option value="USA">USA</option>
+        <option value="France">France</option>
+        <option value="Italy">Italy</option>
+        <option value="Spain">Spain</option>
+    </select>
+</h3>
 
-        Appellation: <select class="form-control" id="search-appellation" name="appellation"> Appellation:
-            <% searchfields.forEach((a) => { %>
-                <option><%= a.appellation %></option>
-        <% }) %>
-        </select>
-    </div>
-    <button type="submit" id="search-button" class="search btn btn-default">Search</button>
-</form>
+<h3>Region:
+    <select name="Region">Region
+        <option value="California">California</option>
+        <option value="Washington">Washington</option>
+        <option value="Oregon">Oregon</option>
+    </select>
+</h3>
 
+<h3>Appellation:
+    <select name="Appellation">Appellation
+        <option value="Carneros">Carneros</option>
+        <option value="Napa Valley">Napa Valley</option>
+        <option value="Russian River">Russian River</option>
+        <option value="Sonoma Coast">Sonoma Coast</option>
+    </select>
+</h3>
+
+<h3>Vintage:
+    <select name="Vintage">Vintage
+        <option value="2015">2015</option>
+        <option value="2014">2014</option>
+        <option value="2013">2013</option>
+        <option value="2012">2012</option>
+        <option value="2011">2011</option>
+
+    </select>
+</h3>
+<br />
+<div class="container">
+        <h1 class="text-center">Search Results</h1>
+        <hr />
+        <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Wine</th>
+                    <th scope="col">Vintage</th>
+                    <th scope="col">GWS Score</th>
+                    <th scope="col">
+                        <form method="GET" action="/profile/userlist">
+                            <button type="submit" class="">See Your List!</button>
+                        </form>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% let rank = 1 %>
+                    <% searchList.forEach((w, i) => { %>
+                        <tr>
+                            <th scope="row"><%= rank++ %></th>
+                            <td><%= w.wine %></td>
+                            <td><%= w.vintage %></td>
+                            <td><%= w.score %></td>
+                            <td>
+                                <form>
+                                    <input type="hidden" id="wine<%= i %>" name="wine" value="<%= w.wine %>">
+                                    <input type="hidden" id="appellation<%= i %>" name="appellation" value="<%= w.appellation %>">
+                                    <input type="hidden" id="regions<%= i %>" name="region" value="<%= w.regions[0] %>">
+                                    <input type="hidden" id="country<%= i %>" name="country" value="<%= w.country %>">
+                                    <input type="hidden" id="vintage<%= i %>" name="vintage" value="<%= w.vintage %>">
+                                    <input type="hidden" id="score<%= i %>" name="score" value="<%= w.score %>">
+                                    <input type="hidden" id="tasted<%= i %>" ame="tasted" value="false">
+                                    <input type="hidden" id="wishlist<%= i %>" name="wishlist" value="false">
+                                    
+                                    <button type='button' class="added btn btn-primary" id="btn<%= i %>">Add to Your List</button>
+                                </form>
+                            </td>
+                            </tr>
+                    <% }) %>
+    
